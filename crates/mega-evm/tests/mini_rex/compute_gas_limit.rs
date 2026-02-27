@@ -614,7 +614,7 @@ fn test_compute_gas_limit_resets_after_volatile_access_rex1() {
 
     // Verify TX1 lowered the compute_gas_limit to oracle limit
     assert_eq!(
-        evm.ctx_ref().additional_limit.borrow().compute_gas_limit,
+        evm.ctx_ref().additional_limit.borrow().compute_gas_limit(),
         ORACLE_ACCESS_COMPUTE_GAS,
         "TX1 should have lowered compute_gas_limit to oracle access limit"
     );
@@ -650,7 +650,7 @@ fn test_compute_gas_limit_resets_after_volatile_access_rex1() {
     );
 
     // Verify the limit is at the original value (not stuck at oracle limit)
-    let actual_limit = evm.ctx_ref().additional_limit.borrow().compute_gas_limit;
+    let actual_limit = evm.ctx_ref().additional_limit.borrow().compute_gas_limit();
     assert_eq!(
         actual_limit, compute_gas_limit,
         "compute_gas_limit should be reset to original value ({}), not stuck at oracle limit ({})",
@@ -722,7 +722,7 @@ fn test_compute_gas_limit_not_reset_pre_rex1() {
 
     // Verify TX1 lowered the compute_gas_limit to oracle limit
     assert_eq!(
-        evm.ctx_ref().additional_limit.borrow().compute_gas_limit,
+        evm.ctx_ref().additional_limit.borrow().compute_gas_limit(),
         ORACLE_ACCESS_COMPUTE_GAS,
         "TX1 should have lowered compute_gas_limit to oracle access limit"
     );
@@ -745,7 +745,7 @@ fn test_compute_gas_limit_not_reset_pre_rex1() {
     );
 
     // Verify the limit is still at the lowered oracle limit (not reset)
-    let actual_limit = evm.ctx_ref().additional_limit.borrow().compute_gas_limit;
+    let actual_limit = evm.ctx_ref().additional_limit.borrow().compute_gas_limit();
     assert_eq!(
         actual_limit, ORACLE_ACCESS_COMPUTE_GAS,
         "compute_gas_limit should still be at oracle limit ({}) in pre-Rex1, not reset to {}",
